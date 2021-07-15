@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "225007452125",
+    "project_id": "test-notif-app-edf17",
+    "storage_bucket": "test-notif-app-edf17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225007452125:android:28ebd779d5741273ee4034",
+        "android_client_info": {
+          "package_name": "com.weeklytaskarkademy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225007452125-4kfrajistl51iujsr7b1tegbq5bp9iut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3DQXmZZy8_kBhVcBX_qEI3Yr4FLqIbUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225007452125-4kfrajistl51iujsr7b1tegbq5bp9iut.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
