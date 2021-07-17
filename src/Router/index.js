@@ -8,6 +8,13 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../screen/Home';
 import Profile from '../screen/Profile';
 import TabBar from '../components/TabBar';
+import TopUp from '../screen/TopUp';
+import Transfer from '../screen/Transfer';
+import History from '../screen/History';
+import TransferTo from '../screen/TransferTo';
+import EditProfile from '../screen/EditProfile';
+import EditProfileDetail from '../screen/EditProfileDetail';
+import Pulsa from '../screen/Pulsa';
 
 const Tab = createBottomTabNavigator();
 
@@ -57,6 +64,69 @@ const Router = () => {
         options={{
           headerShown: false,
           title: 'MainApp',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        component={TopUp}
+        name="TopUp"
+        options={{
+          headerShown: false,
+          title: 'TopUp',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        component={Transfer}
+        name="Transfer"
+        options={{
+          headerShown: false,
+          title: 'Transfer',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        component={History}
+        name="History"
+        options={{
+          headerShown: false,
+          title: 'History',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        component={TransferTo}
+        name="TransferTo"
+        options={{
+          headerShown: false,
+          title: 'TransferTo',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        component={EditProfile}
+        name="EditProfile"
+        options={{
+          headerShown: false,
+          title: 'EditProfile',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        component={EditProfileDetail}
+        name="EditProfileDetail"
+        options={{
+          headerShown: false,
+          title: 'EditProfileDetail',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        component={Pulsa}
+        name="Pulsa"
+        options={{
+          headerShown: false,
+          title: 'Pulsa',
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />

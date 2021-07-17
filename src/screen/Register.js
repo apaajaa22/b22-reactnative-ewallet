@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
   wrapperInput: {marginBottom: 40},
   wrapperButton: {
     alignItems: 'center',
-    paddingHorizontal: 31,
+    paddingHorizontal: 20,
   },
 });

@@ -16,10 +16,10 @@ export default Button;
 
 const styles = StyleSheet.create({
   container: isSecondary => ({
-    backgroundColor: isSecondary ? '#95a5a6' : '#f39c12',
+    backgroundColor: isSecondary ? '#95a5a6' : '#0BCAD4',
     height: 50,
     justifyContent: 'center',
-    marginHorizontal: 31,
+    marginHorizontal: 20,
     borderRadius: 20,
     width: '100%',
   }),

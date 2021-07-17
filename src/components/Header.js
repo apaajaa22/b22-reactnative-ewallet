@@ -5,15 +5,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import Gap from './Gap';
 
-const Header = ({title, main}) => {
+const Header = ({title, main, sec}) => {
   const navigation = useNavigation();
   return (
     <View>
       {main ? (
-        <View style={styles.mainHeader}>
-          <Text style={styles.mainTitle}>{title}</Text>
+        <View style={styles.mainHeader(sec)}>
+          <Text style={styles.mainTitle(sec)}>{title}</Text>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <IconMaterial name="bell" size={28} color="#fff" />
+            <IconMaterial name="bell" size={28} color={sec ? '#000' : '#fff'} />
           </TouchableOpacity>
         </View>
       ) : (
@@ -32,25 +32,29 @@ const Header = ({title, main}) => {
 export default Header;
 
 const styles = StyleSheet.create({
-  mainHeader: {
-    backgroundColor: '#8e44ac',
-    height: 70,
+  mainHeader: sec => ({
+    backgroundColor: sec ? '#fff' : '#4c2a86',
+    height: 60,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 31,
-  },
-  mainTitle: {fontSize: 22, fontWeight: 'bold', color: '#fff'},
+    paddingHorizontal: 20,
+  }),
+  mainTitle: sec => ({
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: sec ? '#000' : '#fff',
+  }),
   container: {
-    height: 108,
+    height: 80,
     alignItems: 'center',
-    backgroundColor: '#8e44ac',
+    backgroundColor: '#4c2a86',
     paddingLeft: 24,
     flexDirection: 'row',
   },
   text: {
-    fontSize: 22,
+    fontSize: 17,
     color: '#fff',
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
 });

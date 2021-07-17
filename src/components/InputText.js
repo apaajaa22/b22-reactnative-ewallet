@@ -5,7 +5,7 @@ import Gap from './Gap';
 const InputText = ({title, ...rest}) => {
   const [color, setColor] = useState('#000');
   const onFocus = () => {
-    setColor('#8e44ac');
+    setColor('#4c2a86');
   };
   const onBlur = () => {
     setColor('#000');
@@ -28,7 +28,7 @@ export default InputText;
 
 const styles = StyleSheet.create({
   wrapperContent: {
-    paddingHorizontal: 31,
+    paddingHorizontal: 20,
     marginTop: 30,
   },
   title: {

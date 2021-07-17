@@ -8,8 +8,8 @@ const Icon = ({label, focus}) => {
     case 'Home':
       return focus ? (
         <View style={styles.wrapperTab}>
-          <IconIon name="home-sharp" size={25} color="#8e44ac" />
-          <Text style={{color: '#8e44ac', fontWeight: 'bold'}}>{label}</Text>
+          <IconIon name="home-sharp" size={25} color="#4c2a86" />
+          <Text style={{color: '#4c2a86', fontWeight: 'bold'}}>{label}</Text>
         </View>
       ) : (
         <View style={styles.wrapperTab}>
@@ -20,8 +20,8 @@ const Icon = ({label, focus}) => {
     case 'Profile':
       return focus ? (
         <View style={styles.wrapperTab}>
-          <IconFeather name="user" size={25} color="#8e44ac" />
-          <Text style={{color: '#8e44ac', fontWeight: 'bold'}}>{label}</Text>
+          <IconFeather name="user" size={25} color="#4c2a86" />
+          <Text style={{color: '#4c2a86', fontWeight: 'bold'}}>{label}</Text>
         </View>
       ) : (
         <View style={styles.wrapperTab}>
@@ -30,7 +30,7 @@ const Icon = ({label, focus}) => {
         </View>
       );
     default:
-      return <IconIon name="home-sharp" size={25} color="#8e44ac" />;
+      return <IconIon name="home-sharp" size={25} color="#4c2a86" />;
   }
 };
 

@@ -12,6 +12,8 @@ const GetStarted = ({navigation}) => {
       <View style={styles.wrapperButton}>
         <Button onPress={() => navigation.navigate('Login')} title="Login" />
         <Gap height={20} />
+        <Text style={styles.or}>ATAU</Text>
+        <Gap height={20} />
         <Button
           onPress={() => navigation.navigate('Register')}
           title="Register"
@@ -25,22 +27,27 @@ export default GetStarted;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#8e44ac',
+    backgroundColor: '#4c2a86',
     justifyContent: 'center',
     flex: 1,
     alignItems: 'center',
   },
   wrapperTitle: {flex: 1, justifyContent: 'center'},
   title: {
-    fontSize: 32,
+    fontSize: 80,
     fontWeight: '700',
     color: '#fff',
     textAlign: 'center',
   },
   wrapperButton: {
-    paddingHorizontal: 31,
+    paddingHorizontal: 20,
     alignItems: 'center',
     width: '100%',
     marginBottom: 30,
+  },
+  or: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#fff',
   },
 });
