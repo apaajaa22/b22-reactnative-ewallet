@@ -19,6 +19,8 @@ import {ILDefaultUser} from '../assets';
 
 const TransferTo = () => {
   const [price, setPrice] = useState('');
+  const [phone, setPhone] = useState('');
+  const [desc, setDesc] = useState('-');
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
@@ -40,7 +42,7 @@ const TransferTo = () => {
               <Image source={ILDefaultUser} style={styles.modalPicture} />
               <View>
                 <Text style={styles.modalSendName}>Rahadian Reza R</Text>
-                <Text style={styles.greyText}>OVO - 081188226765</Text>
+                <Text style={styles.greyText}>OVO - {phone}</Text>
               </View>
             </View>
             <Gap height={25} />
@@ -51,14 +53,14 @@ const TransferTo = () => {
               <Gap height={20} />
               <Text style={styles.greyText}>Pesan (optional)</Text>
               <Gap height={8} />
-              <Text>testing 1 2 3</Text>
+              <Text>{desc}</Text>
             </View>
             <Gap height={20} />
             <View>
               <Text style={styles.textDetail}>Detail</Text>
               <View style={styles.modalNominal}>
                 <Text style={styles.greyText}>Nominal Transfer</Text>
-                <Text style={styles.greyText}>Rp 10.000</Text>
+                <Text style={styles.greyText}>Rp {price}</Text>
               </View>
               <Gap height={10} />
               <View style={styles.modalNominal}>
@@ -86,7 +88,11 @@ const TransferTo = () => {
           <Header title="KE SESAMA OVO" />
           <View style={styles.wrapperContent}>
             <View style={styles.wrapperTextInput}>
-              <TextInput placeholder="Masukkan nama atau nomor ponsel" />
+              <TextInput
+                value={phone}
+                onChangeText={e => setPhone(e)}
+                placeholder="Masukkan nama atau nomor ponsel"
+              />
               <Icon name="contacts" size={28} color="grey" />
             </View>
             <Text>Sumber Dana</Text>
@@ -107,7 +113,12 @@ const TransferTo = () => {
               </View>
             </View>
             <Gap height={20} />
-            <TextInput style={styles.desc} placeholder="Pesan (opsional)" />
+            <TextInput
+              style={styles.desc}
+              value={desc}
+              onChangeText={e => setDesc(e)}
+              placeholder="Pesan (opsional)"
+            />
           </View>
           <View style={styles.button}>
             <Button onPress={() => setModalVisible(true)} title="LANJUTKAN" />

@@ -12,7 +12,8 @@ const Header = ({title, main, sec}) => {
       {main ? (
         <View style={styles.mainHeader(sec)}>
           <Text style={styles.mainTitle(sec)}>{title}</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Notifications')}>
             <IconMaterial name="bell" size={28} color={sec ? '#000' : '#fff'} />
           </TouchableOpacity>
         </View>

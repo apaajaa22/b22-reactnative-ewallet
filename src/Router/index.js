@@ -15,6 +15,7 @@ import TransferTo from '../screen/TransferTo';
 import EditProfile from '../screen/EditProfile';
 import EditProfileDetail from '../screen/EditProfileDetail';
 import Pulsa from '../screen/Pulsa';
+import Notifications from '../screen/Notifications';
 
 const Tab = createBottomTabNavigator();
 
@@ -127,6 +128,15 @@ const Router = () => {
         options={{
           headerShown: false,
           title: 'Pulsa',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        component={Notifications}
+        name="Notifications"
+        options={{
+          headerShown: false,
+          title: 'Notifications',
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />

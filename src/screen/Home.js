@@ -9,6 +9,7 @@ import {
   ILMore,
   ILPhone,
   ILPLN,
+  ILPromo,
   ILShield,
   ILTv,
   ILUmbrella,
@@ -89,7 +90,12 @@ const Home = ({navigation}) => {
         </View>
       </View>
       <View style={styles.containerPromo}>
-        <Text>Info Promo</Text>
+        <View style={styles.wrapperSubtitle}>
+          <Text style={styles.subTitle}>Info dan Promo Spesial</Text>
+          <Text style={styles.subTitleGreen}>Lihat Semua</Text>
+        </View>
+        <Gap height={20} />
+        <Image source={ILPromo} style={styles.picturePromo} />
       </View>
     </View>
   );
@@ -137,6 +143,7 @@ const styles = StyleSheet.create({
   containerPromo: {
     backgroundColor: '#fff',
     paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   wrapperLogo: {
     flexDirection: 'row',
@@ -149,5 +156,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: 60,
+  },
+  subTitle: {
+    fontWeight: 'bold',
+    fontSize: 17,
+  },
+  subTitleGreen: {
+    color: '#0BCAD4',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  wrapperSubtitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  picturePromo: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10,
   },
 });

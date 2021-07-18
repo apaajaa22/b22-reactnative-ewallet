@@ -7,6 +7,7 @@ import ILPhone from './IL_Phone.png';
 import ILShield from './IL_Shield.png';
 import ILTv from './IL_Tv.png';
 import ILUmbrella from './IL_Umbrella.png';
+import ILPromo from './IL_Promo.png';
 
 export {
   ILDefaultUser,
@@ -18,4 +19,5 @@ export {
   ILShield,
   ILTv,
   ILUmbrella,
+  ILPromo,
 };
