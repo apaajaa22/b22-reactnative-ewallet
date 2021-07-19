@@ -11,8 +11,14 @@ import {ILDefaultUser} from '../assets';
 import Button from '../components/Button';
 import Gap from '../components/Gap';
 import Header from '../components/Header';
+import {useSelector, useDispatch} from 'react-redux';
+import {updateName} from '../redux/action/profile';
 
 const EditProfile = ({navigation}) => {
+  const {profile} = useSelector(state => state.profile);
+  const {token} = useSelector(state => state.authToken);
+  const [name, setName] = useState(profile.name);
+  const dispatch = useDispatch();
   const [color, setColor] = useState('grey');
   const onBlur = () => {
     setColor('grey');
@@ -20,12 +26,21 @@ const EditProfile = ({navigation}) => {
   const onFocus = () => {
     setColor('#0BCAD4');
   };
+
+  const onSubmit = () => {
+    dispatch(updateName(token, name));
+  };
   return (
     <View style={styles.mainContainer}>
       <Header title="EDIT PROFIL" />
       <View style={styles.container}>
         <View style={styles.wrapperImage}>
-          <Image source={ILDefaultUser} style={styles.picture} />
+          <Image
+            source={
+              profile.picture !== null ? {uri: profile.picture} : ILDefaultUser
+            }
+            style={styles.picture}
+          />
           <TouchableOpacity activeOpacity={0.7}>
             <Text style={styles.textGreen}>Perbarui Foto Profil</Text>
           </TouchableOpacity>
@@ -36,15 +51,16 @@ const EditProfile = ({navigation}) => {
           <TextInput
             onBlur={onBlur}
             onFocus={onFocus}
-            value="rahadian reza"
+            value={name}
             style={styles.textInput(color)}
+            onChangeText={setName}
           />
         </View>
         <Gap height={20} />
         <View>
           <Text>Nomor Ponsel</Text>
           <View style={styles.wrapperProfile}>
-            <Text>082212345678</Text>
+            <Text>{profile.phone}</Text>
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate('EditProfileDetail', {type: 'phone'})
@@ -57,7 +73,7 @@ const EditProfile = ({navigation}) => {
         <View>
           <Text>Email</Text>
           <View style={styles.wrapperProfile}>
-            <Text>reza.rahadian1@email.com</Text>
+            <Text>{profile.email}</Text>
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate('EditProfileDetail', {type: 'email'})
@@ -68,7 +84,7 @@ const EditProfile = ({navigation}) => {
         </View>
       </View>
       <View style={styles.wrapperButton}>
-        <Button title="SIMPAN" />
+        <Button title="SIMPAN" onPress={onSubmit} />
       </View>
     </View>
   );

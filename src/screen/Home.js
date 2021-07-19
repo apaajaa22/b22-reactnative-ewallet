@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,15 +15,23 @@ import {
   ILUmbrella,
 } from '../assets';
 import Gap from '../components/Gap';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProfile} from '../redux/action/profile';
 
 const Home = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {token} = useSelector(state => state.authToken);
+  const {profile} = useSelector(state => state.profile);
+  useEffect(() => {
+    dispatch(getProfile(token));
+  }, [dispatch, navigation, token]);
   return (
     <View style={styles.container}>
       <View style={styles.containerTop}>
         <Header main title="OVO" />
         <View style={styles.wrapperTop}>
           <Text style={styles.infoLabel}>OVO Cash</Text>
-          <Text style={styles.infoLabelPrice}>RP 20000</Text>
+          <Text style={styles.infoLabelPrice}>RP {profile.balance}</Text>
         </View>
         <View style={styles.wrapperContentInfo}>
           <TouchableOpacity

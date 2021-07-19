@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-const HistoryItem = ({notif}) => {
+const HistoryItem = ({notif, date, title, price}) => {
   return (
     <View>
-      <Text style={styles.paymentDate}>17 Juni 2021</Text>
+      <Text style={styles.paymentDate}>{date}</Text>
       {!notif ? (
         <View style={styles.wrapperMainHistory}>
           <Text style={styles.title}>TOKOPEDIA</Text>
@@ -17,12 +17,9 @@ const HistoryItem = ({notif}) => {
         <View style={styles.wrapperMainHistory}>
           <View style={styles.borderBottom}>
             <Text style={styles.textNotif}>
-              Top up Rp 15.000 dari BANK MANDIRI telah berhasil
+              {title} sebesar {price}
             </Text>
           </View>
-          <Text style={styles.textNotif}>
-            Selamat, Upgrade OVO Premier anda telah di setujui
-          </Text>
         </View>
       )}
     </View>

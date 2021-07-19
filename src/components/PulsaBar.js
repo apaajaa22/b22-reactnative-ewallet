@@ -13,6 +13,9 @@ import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import Button from './Button';
 import Gap from './Gap';
+import {useDispatch, useSelector} from 'react-redux';
+import {transaction} from '../redux/action/transaction';
+import toastMessage from '../utils/showMessage';
 
 const renderTabBar = props => (
   <TabBar
@@ -40,6 +43,9 @@ const renderTabBar = props => (
 );
 
 const TopUp = () => {
+  const dispatch = useDispatch();
+  const {phone} = useSelector(state => state.phone);
+  const {token} = useSelector(state => state.authToken);
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [pulsa, setPulsa] = useState('');
@@ -47,10 +53,7 @@ const TopUp = () => {
   const trx = 0;
   const total = price + trx;
   const DATA = [
-    {
-      id: 1,
-      price: 10000,
-    },
+    {id: 1, price: 5000},
     {id: 2, price: 10000},
     {id: 3, price: 20000},
     {id: 4, price: 30000},
@@ -59,6 +62,20 @@ const TopUp = () => {
     {id: 7, price: 60000},
     {id: 8, price: 70000},
   ];
+
+  const formData = {
+    balance: total,
+    trxFee: 0,
+  };
+
+  const onSubmit = () => {
+    if (phone.length <= 0) {
+      toastMessage('Number must be filled');
+    } else {
+      dispatch(transaction(token, formData, navigation));
+    }
+  };
+
   const renderItem = ({item}) => {
     const onPress = () => {
       setModalVisible(true);
@@ -98,7 +115,7 @@ const TopUp = () => {
             <Gap height={20} />
             <View style={styles.wrapperInfo}>
               <Text>Nomor Ponsel</Text>
-              <Text>082212345678</Text>
+              <Text>{phone}</Text>
             </View>
             <Gap height={10} />
             <View style={styles.wrapperInfo}>
@@ -133,7 +150,7 @@ const TopUp = () => {
               </View>
               <Gap width={15} />
               <View style={{width: 150}}>
-                <Button title="Konfirmasi" />
+                <Button title="Konfirmasi" onPress={onSubmit} />
               </View>
             </View>
           </View>
@@ -168,9 +185,9 @@ const renderScene = SceneMap({
   2: PaketData,
 });
 
-const PulsaBar = ({phone}) => {
+const PulsaBar = () => {
   const layout = useWindowDimensions();
-  console.log(phone);
+
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: '1', title: 'Isi Pulsa'},

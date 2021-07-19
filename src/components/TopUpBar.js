@@ -19,6 +19,9 @@ import IconIon from 'react-native-vector-icons/Ionicons';
 import Button from './Button';
 import PaymentCard from './PaymentCard';
 import BalanceItem from './BalanceItem';
+import {useDispatch, useSelector} from 'react-redux';
+import {topUp} from '../redux/action/topup';
+import toastMessage from '../utils/showMessage';
 
 const renderTabBar = props => (
   <TabBar
@@ -46,13 +49,28 @@ const renderTabBar = props => (
 );
 
 const TopUp = () => {
+  const {profile} = useSelector(state => state.profile);
   const [price, setPrice] = useState('');
-  console.log(price);
+  const navigation = useNavigation();
+  const formData = {
+    balance: Number(price),
+    fee: 0,
+  };
+  const dispatch = useDispatch();
+  const {token} = useSelector(state => state.authToken);
+
+  const onSubmit = () => {
+    if (price <= 0) {
+      toastMessage('minimum top up is 10.000');
+    } else {
+      dispatch(topUp(token, formData, navigation));
+    }
+  };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.wrapperFirst}>
         <Text style={styles.titleFirst}>Top Up ke</Text>
-        <BalanceItem price={10000} />
+        <BalanceItem price={Number(profile.balance).toLocaleString('en')} />
       </View>
       <View style={styles.wrapperFirst}>
         <Text style={styles.titleFirst}>Pilih Nominal Top Up</Text>
@@ -69,6 +87,7 @@ const TopUp = () => {
           onChangeText={e => setPrice(e)}
           placeholder="Rp"
           style={styles.textInput}
+          keyboardType="number-pad"
         />
       </View>
       <View style={styles.wrapperFirst}>
@@ -79,7 +98,7 @@ const TopUp = () => {
         </View>
       </View>
       <View style={styles.wrapperButton}>
-        <Button title="Top Up Sekarang" />
+        <Button onPress={onSubmit} title="Top Up Sekarang" />
       </View>
     </ScrollView>
   );

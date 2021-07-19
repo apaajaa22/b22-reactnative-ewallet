@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,9 +10,15 @@ import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Gap from '../components/Gap';
 import PulsaBar from '../components/PulsaBar';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Pulsa = () => {
+  const dispatch = useDispatch();
   const [input, setInput] = useState('');
+  useEffect(() => {
+    dispatch({type: 'SET_PHONE', payload: input});
+  }, [dispatch, input]);
+
   const clearInput = () => {
     setInput('');
   };
@@ -30,6 +36,7 @@ const Pulsa = () => {
               onChangeText={e => setInput(e)}
               value={input}
               placeholder="Contoh 1234567890"
+              keyboardType="number-pad"
             />
             <TouchableOpacity onPress={clearInput}>
               <Icon name="close-circle" size={25} color="grey" />
@@ -38,7 +45,7 @@ const Pulsa = () => {
         </View>
       </View>
       <Gap height={10} />
-      <PulsaBar phone={input} />
+      <PulsaBar />
     </View>
   );
 };

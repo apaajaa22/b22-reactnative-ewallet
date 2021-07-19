@@ -1,22 +1,40 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {ILDefaultUser} from '../assets';
 import Button from '../components/Button';
 import Gap from '../components/Gap';
 import Header from '../components/Header';
 import ItemInfo from '../components/ItemInfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProfile} from '../redux/action/profile';
 
 const Profile = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {token} = useSelector(state => state.authToken);
+  const {profile} = useSelector(state => state.profile);
+  useEffect(() => {
+    dispatch(getProfile(token));
+  }, [dispatch, navigation, token]);
+
+  const signOut = () => {
+    dispatch({type: 'GET_TOKEN', payload: null});
+    navigation.reset({index: 0, routes: [{name: 'GetStarted'}]});
+  };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Header sec main title="Profile" />
       <View style={styles.wrapperSection}>
         <View style={styles.profile}>
-          <Image source={ILDefaultUser} style={styles.picture} />
+          <Image
+            source={
+              profile.picture !== null ? {uri: profile.picture} : ILDefaultUser
+            }
+            style={styles.picture}
+          />
           <Gap width={20} />
           <View>
-            <Text>Rahadian Reza</Text>
-            <Text>0922-1832-9375</Text>
+            <Text>{profile.name}</Text>
+            <Text>{profile.phone}</Text>
           </View>
         </View>
       </View>
@@ -51,7 +69,7 @@ const Profile = ({navigation}) => {
         <ItemInfo title="Pusat Bantuan" iconName="question-circle" />
       </View>
       <View style={styles.wrapperButton}>
-        <Button title="Sign Out" />
+        <Button title="Sign Out" onPress={signOut} />
       </View>
     </ScrollView>
   );

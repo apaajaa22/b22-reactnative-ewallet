@@ -12,11 +12,27 @@ import Button from '../components/Button';
 import Gap from '../components/Gap';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateEmail, updatePhone} from '../redux/action/profile';
 
 const EditProfileDetail = ({route}) => {
   const {type} = route.params;
   const [color, setColor] = useState('grey');
-  console.log(type);
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  console.log(phone);
+  const dispatch = useDispatch();
+  const {token} = useSelector(state => state.authToken);
+  const {profile} = useSelector(state => state.profile);
+
+  const onSubmit = () => {
+    if (type === 'phone') {
+      dispatch(updatePhone(token, phone));
+    } else {
+      dispatch(updateEmail(token, email));
+    }
+  };
+
   const onBlur = () => {
     setColor('grey');
   };
@@ -40,13 +56,13 @@ const EditProfileDetail = ({route}) => {
             <View>
               <Text>Nomor Ponsel Terdaftar</Text>
               <Gap height={8} />
-              <Text>082212345678</Text>
+              <Text>{profile.phone}</Text>
             </View>
           ) : (
             <View>
               <Text>Email Terdaftar</Text>
               <Gap height={8} />
-              <Text>reza.rahadian1@email.com</Text>
+              <Text>{profile.email}</Text>
             </View>
           )}
         </View>
@@ -55,7 +71,8 @@ const EditProfileDetail = ({route}) => {
           onFocus={onFocus}
           onBlur={onBlur}
           style={styles.textInput(color)}
-          placeholder="Nomor Ponsel Baru"
+          placeholder={type === 'phone' ? 'Nomor Ponsel Baru' : 'Email Baru'}
+          onChangeText={type === 'phone' ? setPhone : setEmail}
         />
         <Gap height={20} />
         <Text>Instruksi</Text>
@@ -79,7 +96,7 @@ const EditProfileDetail = ({route}) => {
         </View>
       </View>
       <View style={styles.wrapperButton}>
-        <Button title="SIMPAN" />
+        <Button onPress={onSubmit} title="SIMPAN" />
       </View>
     </View>
   );

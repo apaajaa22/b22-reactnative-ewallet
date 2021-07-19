@@ -1,11 +1,13 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import Gap from './Gap';
 import HistoryItem from './HistoryItem';
 import PaymentCard from './PaymentCard';
+import {useDispatch, useSelector} from 'react-redux';
+import {getHistory} from '../redux/action/profile';
 
 const renderTabBar = props => (
   <TabBar
@@ -33,13 +35,27 @@ const renderTabBar = props => (
 );
 
 const Notifikasi = () => {
+  const dispatch = useDispatch();
+  const {token} = useSelector(state => state.authToken);
+  const {history} = useSelector(state => state.profile);
+  useEffect(() => {
+    dispatch(getHistory(token));
+  }, [dispatch, navigation, token]);
   const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <HistoryItem notif />
-      <HistoryItem notif />
-      <HistoryItem notif />
-    </View>
+    <ScrollView style={styles.container}>
+      {history.map(data => {
+        return (
+          <HistoryItem
+            date={data.createdAt}
+            title={data.description}
+            price={data.deductedBalance}
+            notif
+          />
+        );
+      })}
+    </ScrollView>
   );
 };
 

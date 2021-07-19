@@ -16,12 +16,36 @@ import BalanceItem from '../components/BalanceItem';
 import Gap from '../components/Gap';
 import Button from '../components/Button';
 import {ILDefaultUser} from '../assets';
+import {useDispatch, useSelector} from 'react-redux';
+import {transfer} from '../redux/action/transfer';
+import toastMessage from '../utils/showMessage';
 
-const TransferTo = () => {
+const TransferTo = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {profile} = useSelector(state => state.profile);
+  const {token} = useSelector(state => state.authToken);
+
   const [price, setPrice] = useState('');
   const [phone, setPhone] = useState('');
-  const [desc, setDesc] = useState('-');
+  const [desc, setDesc] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+
+  const formData = {
+    phone: phone,
+    balance: price,
+    trxFee: 0,
+  };
+
+  const onSubmit = () => {
+    if (price <= 0) {
+      toastMessage('minimum top up is 10.000');
+    } else if (profile.balance < price) {
+      toastMessage('your balance is not enough');
+    } else {
+      dispatch(transfer(token, formData, navigation));
+    }
+  };
+
   return (
     <>
       <Modal
@@ -70,11 +94,11 @@ const TransferTo = () => {
               <Gap height={10} />
               <View style={[styles.totalPriceWrapper, styles.modalNominal]}>
                 <Text style={styles.totalPrice}>Total</Text>
-                <Text style={styles.totalPrice}>Rp 10.000</Text>
+                <Text style={styles.totalPrice}>Rp {price}</Text>
               </View>
             </View>
             <View style={styles.modalButton}>
-              <Button title="Transfer" />
+              <Button title="Transfer" onPress={onSubmit} />
               <Gap height={15} />
               <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={styles.textCancel}>BATALKAN</Text>
@@ -92,12 +116,13 @@ const TransferTo = () => {
                 value={phone}
                 onChangeText={e => setPhone(e)}
                 placeholder="Masukkan nama atau nomor ponsel"
+                keyboardType="number-pad"
               />
               <Icon name="contacts" size={28} color="grey" />
             </View>
             <Text>Sumber Dana</Text>
             <Gap height={10} />
-            <BalanceItem price={10000} />
+            <BalanceItem price={Number(profile.balance).toLocaleString('en')} />
             <Gap height={20} />
             <View style={styles.wrapperNominalTF}>
               <Text>Nominal Transfer</Text>
@@ -109,6 +134,7 @@ const TransferTo = () => {
                   placeholder="0"
                   placeholderTextColor="#000"
                   onChangeText={e => setPrice(e)}
+                  keyboardType="number-pad"
                 />
               </View>
             </View>
