@@ -61,7 +61,7 @@ const TopUp = () => {
 
   const onSubmit = () => {
     if (price <= 0) {
-      toastMessage('minimum top up is 10.000');
+      toastMessage('minimum top up 10.000');
     } else {
       dispatch(topUp(token, formData, navigation));
     }

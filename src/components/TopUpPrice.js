@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Number from './Number';
 
 const TopUpPrice = ({price, onPress}) => {
   return (
@@ -7,7 +8,9 @@ const TopUpPrice = ({price, onPress}) => {
       onPress={onPress}
       activeOpacity={0.7}
       style={styles.border}>
-      <Text style={styles.borderText}>Rp {price}</Text>
+      <Text style={styles.borderText}>
+        <Number number={price} />
+      </Text>
     </TouchableOpacity>
   );
 };

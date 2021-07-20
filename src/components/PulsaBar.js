@@ -16,6 +16,7 @@ import Gap from './Gap';
 import {useDispatch, useSelector} from 'react-redux';
 import {transaction} from '../redux/action/transaction';
 import toastMessage from '../utils/showMessage';
+import Number from './Number';
 
 const renderTabBar = props => (
   <TabBar
@@ -78,9 +79,13 @@ const TopUp = () => {
 
   const renderItem = ({item}) => {
     const onPress = () => {
-      setModalVisible(true);
-      setPulsa(item.price);
-      console.log(item);
+      if (phone.length <= 0) {
+        toastMessage('Number must be filled');
+      } else {
+        setModalVisible(true);
+        setPulsa(item.price);
+        console.log(item);
+      }
     };
     return (
       <TouchableOpacity
@@ -95,7 +100,9 @@ const TopUp = () => {
           marginVertical: 10,
           borderRadius: 8,
         }}>
-        <Text>{item.price}</Text>
+        <Text>
+          <Number type="decimal" number={item.price} />
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -120,14 +127,18 @@ const TopUp = () => {
             <Gap height={10} />
             <View style={styles.wrapperInfo}>
               <Text>Voucher Telkomsel</Text>
-              <Text>{pulsa}</Text>
+              <Text>
+                <Number type="decimal" number={pulsa} />
+              </Text>
             </View>
             <Gap height={20} />
             <View>
               <Text style={styles.textDetail}>Detail Pembayaran</Text>
               <View style={styles.modalNominal}>
                 <Text style={styles.greyText}>Harga Voucher</Text>
-                <Text style={styles.greyText}>Rp {price}</Text>
+                <Text style={styles.greyText}>
+                  <Number number={price} />
+                </Text>
               </View>
               <Gap height={10} />
               <View style={styles.modalNominal}>
@@ -137,7 +148,9 @@ const TopUp = () => {
               <Gap height={10} />
               <View style={[styles.totalPriceWrapper, styles.modalNominal]}>
                 <Text style={styles.totalPrice}>Total Pembayaran</Text>
-                <Text style={styles.totalPrice}>Rp {total}</Text>
+                <Text style={styles.totalPrice}>
+                  <Number number={total} />
+                </Text>
               </View>
             </View>
             <View style={styles.modalButton}>

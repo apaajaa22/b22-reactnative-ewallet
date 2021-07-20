@@ -8,6 +8,7 @@ import ILShield from './IL_Shield.png';
 import ILTv from './IL_Tv.png';
 import ILUmbrella from './IL_Umbrella.png';
 import ILPromo from './IL_Promo.png';
+import ICSearch from './IC_Search.png';
 
 export {
   ILDefaultUser,
@@ -20,4 +21,5 @@ export {
   ILTv,
   ILUmbrella,
   ILPromo,
+  ICSearch,
 };

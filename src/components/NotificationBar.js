@@ -1,6 +1,15 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import Gap from './Gap';
@@ -8,6 +17,10 @@ import HistoryItem from './HistoryItem';
 import PaymentCard from './PaymentCard';
 import {useDispatch, useSelector} from 'react-redux';
 import {getHistory} from '../redux/action/profile';
+import {http} from '../helpers/http';
+import {API_URL} from '@env';
+import {Picker} from '@react-native-picker/picker';
+import {ICSearch} from '../assets';
 
 const renderTabBar = props => (
   <TabBar
@@ -38,24 +51,73 @@ const Notifikasi = () => {
   const dispatch = useDispatch();
   const {token} = useSelector(state => state.authToken);
   const {history} = useSelector(state => state.profile);
+  const [renderData, setRenderData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState('');
+  const [selectedValue, setSelectedValue] = useState('id');
+
+  const getNextPage = async () => {
+    dispatch({type: 'SET_LOADING', payload: true});
+    const {data} = await http(token).get(
+      `${API_URL}/transaction?search=${search}&page=${currentPage}&sort[${selectedValue}]=0`,
+    );
+    dispatch({type: 'SET_LOADING', payload: false});
+    if (currentPage > 1) {
+      setRenderData([...renderData, ...data.results]);
+    } else {
+      setRenderData(data.results);
+    }
+  };
   useEffect(() => {
-    dispatch(getHistory(token));
-  }, [dispatch, navigation, token]);
+    getNextPage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation, currentPage, selectedValue]);
+
   const navigation = useNavigation();
 
+  const loadMoreProduct = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const renderItem = ({item}) => {
+    return (
+      <HistoryItem
+        notif
+        date={item.createdAt}
+        title={item.description}
+        price={item.deductedBalance}
+      />
+    );
+  };
   return (
-    <ScrollView style={styles.container}>
-      {history.map(data => {
-        return (
-          <HistoryItem
-            date={data.createdAt}
-            title={data.description}
-            price={data.deductedBalance}
-            notif
-          />
-        );
-      })}
-    </ScrollView>
+    <View style={{flex: 1}}>
+      <View>
+        <View style={styles.inputSearchWrapper}>
+          <TextInput placeholder="search..." onChangeText={setSearch} />
+          <TouchableOpacity onPress={getNextPage}>
+            <Image source={ICSearch} />
+          </TouchableOpacity>
+        </View>
+        <View>
+          <Picker
+            selectedValue={selectedValue}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedValue(itemValue)
+            }>
+            <Picker.Item label="Sortir" value="id" />
+            <Picker.Item label="Balance" value="deductedBalance" />
+            <Picker.Item label="createdAt" value="createdAt" />
+          </Picker>
+        </View>
+      </View>
+      <FlatList
+        renderItem={renderItem}
+        data={renderData}
+        onEndReached={search.length > 1 ? null : loadMoreProduct}
+        onEndReachedThreshold={0}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 };
 
@@ -106,5 +168,15 @@ const styles = StyleSheet.create({
     color: 'grey',
     textAlign: 'center',
     marginTop: 40,
+  },
+  inputSearchWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    marginTop: 10,
+    borderRadius: 8,
   },
 });

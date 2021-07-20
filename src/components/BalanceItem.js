@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Gap from './Gap';
+import Number from './Number';
 
 const BalanceItem = ({price}) => {
   return (
@@ -11,7 +12,9 @@ const BalanceItem = ({price}) => {
       <Gap width={20} />
       <View>
         <Text style={styles.subTitleFirst}>OVO CASH</Text>
-        <Text>Balance Rp {price}</Text>
+        <Text>
+          Balance <Number number={price} />
+        </Text>
       </View>
     </View>
   );

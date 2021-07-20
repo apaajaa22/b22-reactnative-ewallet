@@ -1,10 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import Number from './Number';
+import moment from 'moment';
 
 const HistoryItem = ({notif, date, title, price}) => {
   return (
     <View>
-      <Text style={styles.paymentDate}>{date}</Text>
+      <Text style={styles.paymentDate}>{moment(date).format('lll')}</Text>
       {!notif ? (
         <View style={styles.wrapperMainHistory}>
           <Text style={styles.title}>TOKOPEDIA</Text>
@@ -17,7 +19,7 @@ const HistoryItem = ({notif, date, title, price}) => {
         <View style={styles.wrapperMainHistory}>
           <View style={styles.borderBottom}>
             <Text style={styles.textNotif}>
-              {title} sebesar {price}
+              Transaksi {title} sebesar <Number number={price} />
             </Text>
           </View>
         </View>

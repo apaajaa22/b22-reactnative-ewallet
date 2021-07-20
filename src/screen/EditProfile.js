@@ -12,14 +12,21 @@ import Button from '../components/Button';
 import Gap from '../components/Gap';
 import Header from '../components/Header';
 import {useSelector, useDispatch} from 'react-redux';
-import {updateName} from '../redux/action/profile';
+import {updateNameAndPhoto} from '../redux/action/profile';
+import toastMessage from '../utils/showMessage';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const EditProfile = ({navigation}) => {
-  const {profile} = useSelector(state => state.profile);
+  const {profile} = useSelector(state => state);
   const {token} = useSelector(state => state.authToken);
-  const [name, setName] = useState(profile.name);
+  const [name, setName] = useState(profile.profile.name);
   const dispatch = useDispatch();
   const [color, setColor] = useState('grey');
+  const [photo, setPhoto] = useState(
+    profile.profile.picture !== null
+      ? {uri: profile.profile.picture}
+      : ILDefaultUser,
+  );
   const onBlur = () => {
     setColor('grey');
   };
@@ -27,21 +34,36 @@ const EditProfile = ({navigation}) => {
     setColor('#0BCAD4');
   };
 
+  const addPhoto = () => {
+    launchImageLibrary(
+      {quality: 0.5, maxHeight: 130, maxWidth: 130},
+      response => {
+        if (response.didCancel) {
+          toastMessage('You dont choose any photo');
+        } else {
+          setPhoto({uri: response.assets[0].uri});
+          const dataImage = {
+            uri: response.assets[0].uri,
+            type: response.assets[0].type,
+            name: response.assets[0].fileName,
+          };
+          dispatch({type: 'SET_PHOTO', payload: dataImage});
+          dispatch({type: 'SET_UPLOAD_STATUS', payload: true});
+        }
+      },
+    );
+  };
+
   const onSubmit = () => {
-    dispatch(updateName(token, name));
+    dispatch(updateNameAndPhoto(token, name, profile));
   };
   return (
     <View style={styles.mainContainer}>
       <Header title="EDIT PROFIL" />
       <View style={styles.container}>
         <View style={styles.wrapperImage}>
-          <Image
-            source={
-              profile.picture !== null ? {uri: profile.picture} : ILDefaultUser
-            }
-            style={styles.picture}
-          />
-          <TouchableOpacity activeOpacity={0.7}>
+          <Image source={photo} style={styles.picture} />
+          <TouchableOpacity activeOpacity={0.7} onPress={addPhoto}>
             <Text style={styles.textGreen}>Perbarui Foto Profil</Text>
           </TouchableOpacity>
         </View>
@@ -60,7 +82,7 @@ const EditProfile = ({navigation}) => {
         <View>
           <Text>Nomor Ponsel</Text>
           <View style={styles.wrapperProfile}>
-            <Text>{profile.phone}</Text>
+            <Text>{profile.profile.phone}</Text>
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate('EditProfileDetail', {type: 'phone'})
@@ -73,7 +95,7 @@ const EditProfile = ({navigation}) => {
         <View>
           <Text>Email</Text>
           <View style={styles.wrapperProfile}>
-            <Text>{profile.email}</Text>
+            <Text>{profile.profile.email}</Text>
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate('EditProfileDetail', {type: 'email'})

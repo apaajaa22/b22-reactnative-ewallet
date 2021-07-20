@@ -17,6 +17,7 @@ import {
 import Gap from '../components/Gap';
 import {useDispatch, useSelector} from 'react-redux';
 import {getProfile} from '../redux/action/profile';
+import Number from '../components/Number';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const Home = ({navigation}) => {
         <Header main title="OVO" />
         <View style={styles.wrapperTop}>
           <Text style={styles.infoLabel}>OVO Cash</Text>
-          <Text style={styles.infoLabelPrice}>RP {profile.balance}</Text>
+          <Number style={styles.infoLabelPrice} number={profile.balance} />
         </View>
         <View style={styles.wrapperContentInfo}>
           <TouchableOpacity
