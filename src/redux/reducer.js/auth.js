@@ -1,5 +1,6 @@
 const initialState = {
   token: null,
+  notifToken: null,
 };
 
 const authToken = (state = initialState, action) => {
@@ -8,6 +9,11 @@ const authToken = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload,
+      };
+    case 'REGISTER_TOKEN':
+      return {
+        ...state,
+        notifToken: action.payload,
       };
     default:
       return state;

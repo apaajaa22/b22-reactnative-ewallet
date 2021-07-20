@@ -18,13 +18,17 @@ import Gap from '../components/Gap';
 import {useDispatch, useSelector} from 'react-redux';
 import {getProfile} from '../redux/action/profile';
 import Number from '../components/Number';
+import {registerToken} from '../redux/action/auth';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
-  const {token} = useSelector(state => state.authToken);
+  const {token, notifToken} = useSelector(state => state.authToken);
   const {profile} = useSelector(state => state.profile);
+
   useEffect(() => {
     dispatch(getProfile(token));
+    dispatch(registerToken(token, notifToken.token));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, navigation, token]);
   return (
     <View style={styles.container}>

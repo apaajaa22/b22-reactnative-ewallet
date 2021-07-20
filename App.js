@@ -9,7 +9,20 @@ import reduxConfig from './src/redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import FlashMessage from 'react-native-flash-message';
 import Loading from './src/components/Loading';
+// import {useDispatch} from 'react-redux';
 const redux = reduxConfig();
+
+PushNotification.configure({
+  onRegister: function (token) {
+    console.log('TOKEN:', token);
+    redux.store.dispatch({type: 'REGISTER_TOKEN', payload: token});
+  },
+});
+
+PushNotification.createChannel({
+  channelId: 'general',
+  channelName: 'general notification',
+});
 
 const MainApp = () => {
   const {isLoading} = useSelector(state => state.globalReducer);
@@ -22,13 +35,6 @@ const MainApp = () => {
   );
 };
 const App = () => {
-  // const trigger = () => {
-  //   PushNotification.localNotification({
-  //     channelId: 'general',
-  //     title: 'local notif',
-  //     message: 'hai ini local notif',
-  //   });
-  // };
   return (
     <Provider store={redux.store}>
       <PersistGate persistor={redux.persistor}>

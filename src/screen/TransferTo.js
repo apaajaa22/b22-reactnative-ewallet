@@ -46,6 +46,18 @@ const TransferTo = ({navigation}) => {
     }
   };
 
+  const onPressed = () => {
+    if (phone.length < 1) {
+      toastMessage('phone number must be filled');
+    } else if (price <= 0) {
+      toastMessage('minimum top up is 10.000');
+    } else if (profile.balance < price) {
+      toastMessage('your balance is not enough');
+    } else {
+      setModalVisible(true);
+    }
+  };
+
   return (
     <>
       <Modal
@@ -65,7 +77,7 @@ const TransferTo = ({navigation}) => {
             <View style={styles.modalWrapperProfile}>
               <Image source={ILDefaultUser} style={styles.modalPicture} />
               <View>
-                <Text style={styles.modalSendName}>Rahadian Reza R</Text>
+                {/* <Text style={styles.modalSendName}>Rahadian Reza R</Text> */}
                 <Text style={styles.greyText}>OVO - {phone}</Text>
               </View>
             </View>
@@ -147,7 +159,7 @@ const TransferTo = ({navigation}) => {
             />
           </View>
           <View style={styles.button}>
-            <Button onPress={() => setModalVisible(true)} title="LANJUTKAN" />
+            <Button onPress={onPressed} title="LANJUTKAN" />
           </View>
         </ScrollView>
       </View>
