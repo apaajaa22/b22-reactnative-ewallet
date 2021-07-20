@@ -2,6 +2,7 @@ import {http} from '../../helpers/http';
 import {API_URL} from '@env';
 import toastMessage from '../../utils/showMessage';
 import {getProfile} from './profile';
+import PushNotification from 'react-native-push-notification';
 
 export const transfer = (token, formData, navigation) => {
   return async dispatch => {
@@ -16,6 +17,11 @@ export const transfer = (token, formData, navigation) => {
       dispatch({type: 'SET_LOADING', payload: false});
       dispatch(getProfile(token));
       navigation.navigate('Home');
+      PushNotification.localNotification({
+        channelId: 'general',
+        title: 'OVO',
+        message: `berhasil transfer balance sebesar ${data.results.deductedBalance}`,
+      });
     } catch (error) {
       dispatch({type: 'SET_LOADING', payload: false});
       toastMessage(error.response.data.message);
