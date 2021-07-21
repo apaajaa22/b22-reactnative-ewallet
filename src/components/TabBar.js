@@ -2,6 +2,8 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import IconIon from 'react-native-vector-icons/Ionicons';
 import IconFeather from 'react-native-vector-icons/Feather';
+import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
+import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Icon = ({label, focus}) => {
   switch (label) {
@@ -17,15 +19,59 @@ const Icon = ({label, focus}) => {
           <Text style={{color: '#b2bec3', fontWeight: 'bold'}}>{label}</Text>
         </View>
       );
-    case 'Profile':
+    case 'Deals':
       return focus ? (
         <View style={styles.wrapperTab}>
-          <IconFeather name="user" size={25} color="#4c2a86" />
+          <IconFontAwesome name="tag" size={25} color="#4c2a86" />
           <Text style={{color: '#4c2a86', fontWeight: 'bold'}}>{label}</Text>
         </View>
       ) : (
         <View style={styles.wrapperTab}>
-          <IconFeather name="user" size={25} color="#b2bec3" />
+          <IconFontAwesome name="tag" size={25} color="#b2bec3" />
+          <Text style={{color: '#b2bec3', fontWeight: 'bold'}}>{label}</Text>
+        </View>
+      );
+    case 'Scan':
+      return focus ? (
+        <View style={styles.wrapperTab}>
+          <View style={styles.wrapperScan}>
+            <IconIon name="scan-outline" size={30} color="#fff" />
+          </View>
+          <Text style={{color: '#4c2a86', fontWeight: 'bold'}}>{label}</Text>
+        </View>
+      ) : (
+        <View style={styles.wrapperTab}>
+          <View style={styles.wrapperScan}>
+            <IconIon name="scan-outline" size={30} color="#fff" />
+          </View>
+          <Text style={{color: '#b2bec3', fontWeight: 'bold'}}>{label}</Text>
+        </View>
+      );
+    case 'Finance':
+      return focus ? (
+        <View style={styles.wrapperTab}>
+          <View style={styles.wrapperFinance}>
+            <Text style={styles.focusTextFinance}>Rp</Text>
+          </View>
+          <Text style={{color: '#4c2a86', fontWeight: 'bold'}}>{label}</Text>
+        </View>
+      ) : (
+        <View style={styles.wrapperTab}>
+          <View style={styles.wrapperNonFocusFinance}>
+            <Text style={styles.nonFocusTextFinance}>Rp</Text>
+          </View>
+          <Text style={{color: '#b2bec3', fontWeight: 'bold'}}>{label}</Text>
+        </View>
+      );
+    case 'Profile':
+      return focus ? (
+        <View style={styles.wrapperTab}>
+          <IconFontAwesome5 name="user-circle" size={25} color="#4c2a86" />
+          <Text style={{color: '#4c2a86', fontWeight: 'bold'}}>{label}</Text>
+        </View>
+      ) : (
+        <View style={styles.wrapperTab}>
+          <IconFontAwesome5 name="user-circle" size={25} color="#b2bec3" />
           <Text style={{color: '#b2bec3', fontWeight: 'bold'}}>{label}</Text>
         </View>
       );
@@ -97,13 +143,46 @@ const styles = StyleSheet.create({
   bottomNav: {
     flexDirection: 'row',
     backgroundColor: 'white',
-    paddingHorizontal: 60,
-    paddingTop: 15,
-    paddingBottom: 13,
+    paddingHorizontal: 20,
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingVertical: 10,
   },
   wrapperTab: {
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wrapperScan: {
+    backgroundColor: '#4c2a86',
+    borderRadius: 35,
+    width: 70,
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: -43,
+  },
+  wrapperFinance: {
+    backgroundColor: '#4c2a86',
+    padding: 5,
+    borderRadius: 30 / 2,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  focusTextFinance: {
+    color: '#fff',
+  },
+  wrapperNonFocusFinance: {
+    backgroundColor: '#b2bec3',
+    padding: 5,
+    borderRadius: 30 / 2,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nonFocusTextFinance: {
+    color: '#fff',
   },
 });

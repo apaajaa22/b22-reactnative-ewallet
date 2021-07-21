@@ -53,17 +53,15 @@ export const updateEmail = (token, email) => {
 export const updateNameAndPhoto = (token, name, photo) => {
   return async dispatch => {
     const form = new FormData();
+    dispatch({type: 'SET_LOADING', payload: true});
     if (photo) {
       form.append('picture', photo);
-      dispatch({type: 'SET_LOADING', payload: true});
       const {data} = await http(token).patch(`${API_URL}/users`, form);
       dispatch(getProfile(token));
       dispatch({type: 'SET_LOADING', payload: false});
-      toastMessage('Update profile success', 'success');
     }
-    form.append('name', name);
     try {
-      dispatch({type: 'SET_LOADING', payload: true});
+      form.append('name', name);
       const {data} = await http(token).patch(`${API_URL}/users`, form);
       dispatch(getProfile(token));
       dispatch({type: 'SET_LOADING', payload: false});

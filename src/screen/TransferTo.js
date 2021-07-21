@@ -19,6 +19,7 @@ import {ILDefaultUser} from '../assets';
 import {useDispatch, useSelector} from 'react-redux';
 import {transfer} from '../redux/action/transfer';
 import toastMessage from '../utils/showMessage';
+import Number from '../components/Number';
 
 const TransferTo = ({navigation}) => {
   const dispatch = useDispatch();
@@ -96,7 +97,9 @@ const TransferTo = ({navigation}) => {
               <Text style={styles.textDetail}>Detail</Text>
               <View style={styles.modalNominal}>
                 <Text style={styles.greyText}>Nominal Transfer</Text>
-                <Text style={styles.greyText}>Rp {price}</Text>
+                <Text style={styles.greyText}>
+                  <Number number={price} />
+                </Text>
               </View>
               <Gap height={10} />
               <View style={styles.modalNominal}>
@@ -106,7 +109,9 @@ const TransferTo = ({navigation}) => {
               <Gap height={10} />
               <View style={[styles.totalPriceWrapper, styles.modalNominal]}>
                 <Text style={styles.totalPrice}>Total</Text>
-                <Text style={styles.totalPrice}>Rp {price}</Text>
+                <Text style={styles.totalPrice}>
+                  <Number number={price} />
+                </Text>
               </View>
             </View>
             <View style={styles.modalButton}>

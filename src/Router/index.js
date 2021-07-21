@@ -16,6 +16,9 @@ import EditProfile from '../screen/EditProfile';
 import EditProfileDetail from '../screen/EditProfileDetail';
 import Pulsa from '../screen/Pulsa';
 import Notifications from '../screen/Notifications';
+import Deals from '../screen/Deals';
+import Scan from '../screen/Scan';
+import Finance from '../screen/Finance';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +26,9 @@ const MainApp = () => {
   return (
     <Tab.Navigator tabBar={props => <TabBar {...props} />}>
       <Tab.Screen component={Home} name="Home" />
+      <Tab.Screen component={Deals} name="Deals" />
+      <Tab.Screen component={Scan} name="Scan" />
+      <Tab.Screen component={Finance} name="Finance" />
       <Tab.Screen component={Profile} name="Profile" />
     </Tab.Navigator>
   );
