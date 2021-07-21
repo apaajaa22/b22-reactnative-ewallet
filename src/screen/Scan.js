@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     width: '100%',
     height: '100%',
+    flexDirection: 'column',
   },
   wrapperContent: {
     height: 150,
@@ -89,6 +90,8 @@ const styles = StyleSheet.create({
   },
   preview: {
     flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
     width: '100%',
     height: '100%',
   },

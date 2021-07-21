@@ -139,7 +139,7 @@ const TransferTo = ({navigation}) => {
             </View>
             <Text>Sumber Dana</Text>
             <Gap height={10} />
-            <BalanceItem price={Number(profile.balance).toLocaleString('en')} />
+            <BalanceItem price={profile.balance} />
             <Gap height={20} />
             <View style={styles.wrapperNominalTF}>
               <Text>Nominal Transfer</Text>
