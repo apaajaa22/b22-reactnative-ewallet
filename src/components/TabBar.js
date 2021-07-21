@@ -35,14 +35,14 @@ const Icon = ({label, focus}) => {
       return focus ? (
         <View style={styles.wrapperTab}>
           <View style={styles.wrapperScan}>
-            <IconIon name="scan-outline" size={30} color="#fff" />
+            <IconIon name="scan-outline" size={25} color="#fff" />
           </View>
           <Text style={{color: '#4c2a86', fontWeight: 'bold'}}>{label}</Text>
         </View>
       ) : (
         <View style={styles.wrapperTab}>
           <View style={styles.wrapperScan}>
-            <IconIon name="scan-outline" size={30} color="#fff" />
+            <IconIon name="scan-outline" size={25} color="#fff" />
           </View>
           <Text style={{color: '#b2bec3', fontWeight: 'bold'}}>{label}</Text>
         </View>
@@ -155,11 +155,11 @@ const styles = StyleSheet.create({
   wrapperScan: {
     backgroundColor: '#4c2a86',
     borderRadius: 35,
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -43,
+    marginTop: -23,
   },
   wrapperFinance: {
     backgroundColor: '#4c2a86',
