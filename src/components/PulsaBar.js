@@ -188,7 +188,7 @@ const TopUp = () => {
 const PaketData = () => {
   return (
     <View>
-      <Text style={styles.noTransaction}>Anda belum punya paket data</Text>
+      <Text style={styles.noTransaction}>Tidak ada paket data</Text>
     </View>
   );
 };

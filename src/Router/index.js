@@ -19,6 +19,7 @@ import Notifications from '../screen/Notifications';
 import Deals from '../screen/Deals';
 import Scan from '../screen/Scan';
 import Finance from '../screen/Finance';
+import SplashScreen from '../screen/SplashScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +38,16 @@ const MainApp = () => {
 const Router = () => {
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="GetStarted">
+    <Stack.Navigator initialRouteName="SplashScreen">
+      <Stack.Screen
+        component={SplashScreen}
+        name="SplashScreen"
+        options={{
+          headerShown: false,
+          title: 'SplashScreen',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
       <Stack.Screen
         component={GetStarted}
         name="GetStarted"
