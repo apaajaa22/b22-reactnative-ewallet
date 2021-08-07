@@ -75,9 +75,21 @@ const TopUp = () => {
       <View style={styles.wrapperFirst}>
         <Text style={styles.titleFirst}>Pilih Nominal Top Up</Text>
         <View style={styles.wrapperPrice}>
-          <TopUpPrice onPress={() => setPrice('100000')} price="100000" />
-          <TopUpPrice onPress={() => setPrice('200000')} price="200000" />
-          <TopUpPrice onPress={() => setPrice('300000')} price="300000" />
+          <TopUpPrice
+            borderStyle={styles.border}
+            onPress={() => setPrice('100000')}
+            price="100000"
+          />
+          <TopUpPrice
+            borderStyle={styles.border}
+            onPress={() => setPrice('200000')}
+            price="200000"
+          />
+          <TopUpPrice
+            borderStyle={styles.border}
+            onPress={() => setPrice('300000')}
+            price="300000"
+          />
         </View>
         <Text style={styles.subTitleSec}>
           Atau masukan nominal top up di sini
@@ -143,7 +155,7 @@ const renderScene = SceneMap({
   2: Method,
 });
 
-const TransferBar = () => {
+const TopUpBar = () => {
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
@@ -162,7 +174,7 @@ const TransferBar = () => {
   );
 };
 
-export default TransferBar;
+export default TopUpBar;
 
 const styles = StyleSheet.create({
   wrapperFirst: {
@@ -247,5 +259,14 @@ const styles = StyleSheet.create({
   subTextSaldo: {
     textAlign: 'center',
     marginBottom: 20,
+  },
+  border: {
+    borderColor: '#4c2a86',
+    borderWidth: 1,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 100 / 2,
   },
 });

@@ -21,11 +21,19 @@ export const updatePhone = (token, phone) => {
     const form = new URLSearchParams();
     form.append('phone', phone);
     try {
-      dispatch({type: 'SET_LOADING', payload: true});
-      const {data} = await http(token).patch(`${API_URL}/users`, form);
-      dispatch(getProfile(token));
-      dispatch({type: 'SET_LOADING', payload: false});
-      toastMessage('Update profile success', 'success');
+      if (!phone.startsWith('08')) {
+        toastMessage('phone number must start with 08');
+      } else if (phone.length < 10) {
+        toastMessage('minimum phone number length must be 10 at least');
+      } else if (phone.length > 12) {
+        toastMessage('maximum phone number length is 12');
+      } else {
+        dispatch({type: 'SET_LOADING', payload: true});
+        const {data} = await http(token).patch(`${API_URL}/users`, form);
+        dispatch(getProfile(token));
+        dispatch({type: 'SET_LOADING', payload: false});
+        toastMessage('Update profile success', 'success');
+      }
     } catch (error) {
       dispatch({type: 'SET_LOADING', payload: false});
       toastMessage('Update profile failed');
@@ -38,14 +46,18 @@ export const updateEmail = (token, email) => {
     const form = new URLSearchParams();
     form.append('email', email);
     try {
-      dispatch({type: 'SET_LOADING', payload: true});
-      const {data} = await http(token).patch(`${API_URL}/users`, form);
-      dispatch(getProfile(token));
-      dispatch({type: 'SET_LOADING', payload: false});
-      toastMessage('Update profile success', 'success');
+      if (!email.includes('@')) {
+        toastMessage('Invalid email format');
+      } else {
+        dispatch({type: 'SET_LOADING', payload: true});
+        const {data} = await http(token).patch(`${API_URL}/users`, form);
+        dispatch(getProfile(token));
+        dispatch({type: 'SET_LOADING', payload: false});
+        toastMessage('Update profile success', 'success');
+      }
     } catch (error) {
       dispatch({type: 'SET_LOADING', payload: false});
-      toastMessage('Update profile failed');
+      toastMessage(error.response.data.message);
     }
   };
 };
@@ -61,11 +73,17 @@ export const updateNameAndPhoto = (token, name, photo) => {
       dispatch({type: 'SET_LOADING', payload: false});
     }
     try {
-      form.append('name', name);
-      const {data} = await http(token).patch(`${API_URL}/users`, form);
-      dispatch(getProfile(token));
-      dispatch({type: 'SET_LOADING', payload: false});
-      toastMessage('Update profile success', 'success');
+      if (name.length < 4) {
+        toastMessage('minimal name must be 4 characters at least');
+      } else if (name.length > 16) {
+        toastMessage('maximal name is 16 characters');
+      } else {
+        form.append('name', name);
+        const {data} = await http(token).patch(`${API_URL}/users`, form);
+        dispatch(getProfile(token));
+        dispatch({type: 'SET_LOADING', payload: false});
+        toastMessage('Update profile success', 'success');
+      }
     } catch (error) {
       dispatch({type: 'SET_LOADING', payload: false});
       toastMessage('Update profile failed');
