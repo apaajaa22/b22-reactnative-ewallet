@@ -74,6 +74,7 @@ const TopUp = () => {
       toastMessage('Number must be filled');
     } else {
       dispatch(transaction(token, formData, navigation));
+      setModalVisible(false);
     }
   };
 
@@ -81,6 +82,12 @@ const TopUp = () => {
     const onPress = () => {
       if (phone.length <= 0) {
         toastMessage('Number must be filled');
+      } else if (!phone.startsWith('08')) {
+        toastMessage('phone number must start with 08');
+      } else if (phone.length < 10) {
+        toastMessage('minimum phone number length must be 10 at least');
+      } else if (phone.length > 12) {
+        toastMessage('maximum phone number length is 12');
       } else {
         setModalVisible(true);
         setPulsa(item.price);
