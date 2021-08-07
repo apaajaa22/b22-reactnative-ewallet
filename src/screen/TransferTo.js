@@ -44,12 +44,19 @@ const TransferTo = ({navigation}) => {
       toastMessage('your balance is not enough');
     } else {
       dispatch(transfer(token, formData, navigation));
+      setModalVisible(false);
     }
   };
 
   const onPressed = () => {
     if (phone.length < 1) {
       toastMessage('phone number must be filled');
+    } else if (!phone.startsWith('08')) {
+      toastMessage('phone number must be start with 08');
+    } else if (phone.length < 10) {
+      toastMessage('Minimum phone number must be 10');
+    } else if (phone.length > 12) {
+      toastMessage('Maximum phone number must be 12');
     } else if (price <= 0) {
       toastMessage('minimum top up is 10.000');
     } else if (profile.balance < price) {
@@ -132,7 +139,7 @@ const TransferTo = ({navigation}) => {
               <TextInput
                 value={phone}
                 onChangeText={e => setPhone(e)}
-                placeholder="Masukkan nama atau nomor ponsel"
+                placeholder="masukkan nomor ponsel"
                 keyboardType="number-pad"
               />
               <Icon name="contacts" size={28} color="grey" />

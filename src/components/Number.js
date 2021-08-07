@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import NumberFormat from 'react-number-format';
 
-const Number = ({number, type, style}) => {
+const Number = ({number, type, style, operator}) => {
   if (type === 'decimal') {
     return (
       <NumberFormat
@@ -20,7 +20,11 @@ const Number = ({number, type, style}) => {
     <NumberFormat
       value={number}
       thousandSeparator="."
-      renderText={value => <Text style={style}>{value}</Text>}
+      renderText={value => (
+        <Text style={style}>
+          {operator} {value}
+        </Text>
+      )}
       decimalSeparator=","
       displayType="text"
       prefix="Rp "

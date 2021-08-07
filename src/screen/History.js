@@ -28,8 +28,10 @@ const History = () => {
 
   const getNextPage = async () => {
     dispatch({type: 'SET_LOADING', payload: true});
+    const value = selectedValue.split(' ');
+    console.log(value[0]);
     const {data} = await http(token).get(
-      `${API_URL}/transaction?search=${search}&page=${currentPage}&sort[${selectedValue}]=0`,
+      `${API_URL}/transaction?search=${search}&page=${currentPage}&sort[${value[0]}]=${value[1]}`,
     );
     dispatch({type: 'SET_LOADING', payload: false});
     if (currentPage > 1) {
@@ -77,8 +79,8 @@ const History = () => {
                 setSelectedValue(itemValue)
               }>
               <Picker.Item label="Sortir" value="id" />
-              <Picker.Item label="Balance" value="deductedBalance" />
-              <Picker.Item label="createdAt" value="createdAt" />
+              <Picker.Item label="Terbaru" value="createdAt 1" />
+              <Picker.Item label="Terlama" value="createdAt 0" />
             </Picker>
           </View>
         </View>

@@ -18,8 +18,13 @@ const HistoryItem = ({notif, date, title, price}) => {
       ) : (
         <View style={styles.wrapperMainHistory}>
           <View style={styles.borderBottom}>
-            <Text style={styles.textNotif}>
-              Transaksi {title} sebesar <Number number={price} />
+            <Text style={styles.textNotif}>Transaksi {title}</Text>
+            <Text>
+              <Number
+                operator={title === 'Top up balance' ? '+' : '-'}
+                number={price}
+                style={title === 'Top up balance' ? styles.inc : styles.dec}
+              />
             </Text>
           </View>
         </View>
@@ -51,11 +56,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   borderBottom: {
-    borderBottomWidth: 1,
-    borderColor: '#F2F2F2',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   textNotif: {
     fontWeight: 'bold',
     paddingVertical: 15,
+  },
+  inc: {
+    color: 'green',
+  },
+  dec: {
+    color: 'red',
   },
 });
