@@ -6,11 +6,12 @@ import {useSelector} from 'react-redux';
 const SplashScreen = ({navigation}) => {
   const {token} = useSelector(state => state.authToken);
   useEffect(() => {
+    console.log('token', token);
     if (token) {
       navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
     } else {
       setTimeout(() => {
-        navigation.navigate('GetStarted');
+        navigation.replace('GetStarted');
       }, 1500);
     }
   }, [navigation, token]);

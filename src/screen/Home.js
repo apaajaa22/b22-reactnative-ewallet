@@ -26,7 +26,7 @@ const Home = ({navigation}) => {
   const {profile} = useSelector(state => state.profile);
 
   useEffect(() => {
-    dispatch(getProfile(token));
+    dispatch(getProfile(token, navigation));
     dispatch(registerToken(token, notifToken.token));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, navigation, token]);

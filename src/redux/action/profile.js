@@ -2,10 +2,16 @@ import {http} from '../../helpers/http';
 import {API_URL} from '@env';
 import toastMessage from '../../utils/showMessage';
 
-export const getProfile = token => {
+export const getProfile = (token, navigation) => {
   return async dispatch => {
-    const {data} = await http(token).get(`${API_URL}/users`);
-    dispatch({type: 'SET_PROFILE', payload: data.results});
+    try {
+      const {data} = await http(token).get(`${API_URL}/users`);
+      dispatch({type: 'SET_PROFILE', payload: data.results});
+    } catch (err) {
+      toastMessage(err.response.data.message);
+      dispatch({type: 'GET_TOKEN', payload: null});
+      navigation.reset({index: 0, routes: [{name: 'GetStarted'}]});
+    }
   };
 };
 
