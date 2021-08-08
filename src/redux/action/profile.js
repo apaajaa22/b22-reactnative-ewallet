@@ -96,3 +96,25 @@ export const updateNameAndPhoto = (token, name, photo) => {
     }
   };
 };
+
+export const changePassword = (token, data, navigation) => {
+  return async dispatch => {
+    const form = new URLSearchParams();
+    form.append('oldPassword', data.oldPassword);
+    form.append('password', data.newPassword);
+    try {
+      dispatch({type: 'SET_LOADING', payload: true});
+      const {data} = await http(token).patch(
+        `${API_URL}/users/changepassword`,
+        form,
+      );
+      dispatch(getProfile(token));
+      dispatch({type: 'SET_LOADING', payload: false});
+      toastMessage('Change password success', 'success');
+    } catch (error) {
+      dispatch({type: 'SET_LOADING', payload: false});
+      toastMessage(error.response.data.message);
+      // console.log(error.response.data);
+    }
+  };
+};

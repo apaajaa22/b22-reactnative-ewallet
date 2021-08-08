@@ -58,6 +58,7 @@ const TopUp = () => {
   };
   const dispatch = useDispatch();
   const {token} = useSelector(state => state.authToken);
+  const [press, setPress] = useState(0);
 
   const onSubmit = () => {
     if (price <= 0) {
@@ -76,18 +77,27 @@ const TopUp = () => {
         <Text style={styles.titleFirst}>Pilih Nominal Top Up</Text>
         <View style={styles.wrapperPrice}>
           <TopUpPrice
-            borderStyle={styles.border}
-            onPress={() => setPrice('100000')}
+            borderStyle={press === 1 ? styles.border : styles.borderOff}
+            onPress={() => {
+              setPrice('100000');
+              setPress(1);
+            }}
             price="100000"
           />
           <TopUpPrice
-            borderStyle={styles.border}
-            onPress={() => setPrice('200000')}
+            borderStyle={press === 2 ? styles.border : styles.borderOff}
+            onPress={() => {
+              setPrice('200000');
+              setPress(2);
+            }}
             price="200000"
           />
           <TopUpPrice
-            borderStyle={styles.border}
-            onPress={() => setPrice('300000')}
+            borderStyle={press === 3 ? styles.border : styles.borderOff}
+            onPress={() => {
+              setPrice('300000');
+              setPress(3);
+            }}
             price="300000"
           />
         </View>
@@ -263,6 +273,15 @@ const styles = StyleSheet.create({
   border: {
     borderColor: '#4c2a86',
     borderWidth: 1,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 100 / 2,
+  },
+  borderOff: {
+    borderColor: '#f2f2f2',
+    borderWidth: 1.8,
     width: 100,
     justifyContent: 'center',
     alignItems: 'center',

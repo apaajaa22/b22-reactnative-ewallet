@@ -20,6 +20,7 @@ import Deals from '../screen/Deals';
 import Scan from '../screen/Scan';
 import Finance from '../screen/Finance';
 import SplashScreen from '../screen/SplashScreen';
+import ChangePassword from '../screen/ChangePassword';
 
 const Tab = createBottomTabNavigator();
 
@@ -153,6 +154,15 @@ const Router = () => {
         options={{
           headerShown: false,
           title: 'Notifications',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        component={ChangePassword}
+        name="ChangePassword"
+        options={{
+          headerShown: false,
+          title: 'ChangePassword',
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />

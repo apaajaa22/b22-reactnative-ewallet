@@ -69,7 +69,11 @@ const Profile = ({navigation}) => {
         </View>
         <View style={styles.wrapperSection}>
           <Text style={styles.titleFirst}>Keamanan</Text>
-          <ItemInfo title="Ubah Security Code" iconName="lock" />
+          <ItemInfo
+            onPress={() => navigation.navigate('ChangePassword')}
+            title="Ubah Password"
+            iconName="lock"
+          />
         </View>
         <View style={styles.wrapperSection}>
           <Text style={styles.titleFirst}>Tentang</Text>

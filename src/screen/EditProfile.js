@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {
   Image,
+  Modal,
   StyleSheet,
   Text,
   TextInput,
@@ -14,12 +15,13 @@ import Header from '../components/Header';
 import {useSelector, useDispatch} from 'react-redux';
 import {updateNameAndPhoto} from '../redux/action/profile';
 import toastMessage from '../utils/showMessage';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const EditProfile = ({navigation}) => {
   const {profile} = useSelector(state => state);
   const {token} = useSelector(state => state.authToken);
   const [name, setName] = useState(profile.profile.name);
+  const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const [color, setColor] = useState('grey');
   const [photo, setPhoto] = useState(
@@ -34,10 +36,28 @@ const EditProfile = ({navigation}) => {
     setColor('#0BCAD4');
   };
 
-  const addPhoto = () => {
-    launchImageLibrary(
-      {quality: 0.5, maxHeight: 130, maxWidth: 130},
-      response => {
+  const addPhoto = type => {
+    setModalVisible(!modalVisible);
+    if (type === 'galery') {
+      launchImageLibrary(
+        {quality: 0.5, maxHeight: 130, maxWidth: 130},
+        response => {
+          if (response.didCancel) {
+            toastMessage('You dont choose any photo');
+          } else {
+            setPhoto({uri: response.assets[0].uri});
+            const dataImage = {
+              uri: response.assets[0].uri,
+              type: response.assets[0].type,
+              name: response.assets[0].fileName,
+            };
+            dispatch({type: 'SET_PHOTO', payload: dataImage});
+            dispatch({type: 'SET_UPLOAD_STATUS', payload: true});
+          }
+        },
+      );
+    } else {
+      launchCamera({quality: 0.5, maxHeight: 130, maxWidth: 130}, response => {
         if (response.didCancel) {
           toastMessage('You dont choose any photo');
         } else {
@@ -50,8 +70,8 @@ const EditProfile = ({navigation}) => {
           dispatch({type: 'SET_PHOTO', payload: dataImage});
           dispatch({type: 'SET_UPLOAD_STATUS', payload: true});
         }
-      },
-    );
+      });
+    }
   };
 
   const onSubmit = () => {
@@ -59,11 +79,36 @@ const EditProfile = ({navigation}) => {
   };
   return (
     <View style={styles.mainContainer}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.modalContainer}>
+          <View style={styles.wrapperModal}>
+            <TouchableOpacity onPress={() => addPhoto('galery')}>
+              <Text>Choose photo from galery</Text>
+            </TouchableOpacity>
+            <Gap height={20} />
+            <TouchableOpacity onPress={() => addPhoto('take')}>
+              <Text>Take a photo</Text>
+            </TouchableOpacity>
+            <Gap height={20} />
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+              <Text>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <Header title="EDIT PROFIL" />
       <View style={styles.container}>
         <View style={styles.wrapperImage}>
           <Image source={photo} style={styles.picture} />
-          <TouchableOpacity activeOpacity={0.7} onPress={addPhoto}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => setModalVisible(true)}>
             <Text style={styles.textGreen}>Perbarui Foto Profil</Text>
           </TouchableOpacity>
         </View>
@@ -152,5 +197,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 40,
+  },
+  modalContainer: {
+    justifyContent: 'flex-end',
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#000000a0',
+  },
+  wrapperModal: {
+    backgroundColor: '#fff',
+    height: 130,
+    justifyContent: 'center',
+    paddingLeft: 30,
   },
 });

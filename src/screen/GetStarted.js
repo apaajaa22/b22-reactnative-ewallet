@@ -5,12 +5,6 @@ import Gap from '../components/Gap';
 import {useSelector} from 'react-redux';
 
 const GetStarted = ({navigation}) => {
-  const {token} = useSelector(state => state.authToken);
-  useEffect(() => {
-    if (token) {
-      navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
-    }
-  }, [navigation, token]);
   return (
     <View style={styles.container}>
       <View style={styles.wrapperTitle}>
